@@ -1,0 +1,299 @@
+---
+import '../styles/global.css';
+import CommonProcedureCard from '../components/CommonProcedureCard.astro';
+import IllustrativePanel from '../components/IllustrativePanel.astro';
+import MotorcycleTradeCard from '../components/MotorcycleTradeCard.astro';
+import Navbar from '../components/Navbar.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+
+const whatsappNumber = '573207133728';
+const whatsappBase = `https://wa.me/${whatsappNumber}`;
+const whatsappLink = (message: string) => `${whatsappBase}?text=${encodeURIComponent(message)}`;
+const facebookCatalogUrl = 'https://www.facebook.com/profile.php?id=100063449696221&locale=es_LA#';
+const navigationLinks = [
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Servicios', href: '#servicios' },
+	{ label: 'Trámites comunes', href: '#tramites-comunes' },
+	{ label: 'Motos usadas', href: facebookCatalogUrl, external: true }
+];
+const isHomePage = Astro.url.pathname === '/';
+const pageTitle = isHomePage ? 'Trámites vehiculares en Medellín | Rincón Motos' : 'Servicios vehiculares en Medellín | Rincón Motos';
+const pageDescription = isHomePage
+	? 'Trámites vehiculares y asesoría vehicular en Medellín y el Área Metropolitana. Compra, venta y retoma de motos usadas, con especial interés en Royal Enfield.'
+	: 'Servicios vehiculares en Medellín, el Área Metropolitana y Colombia: trámites, asesoría, compra y retoma de motos de segunda.';
+const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const localAreas = [
+	{
+		'@type': 'City',
+		name: 'Medellín',
+		containedInPlace: {
+			'@type': 'AdministrativeArea',
+			name: 'Antioquia'
+		}
+	},
+	{
+		'@type': 'AdministrativeArea',
+		name: 'Área Metropolitana del Valle de Aburrá'
+	},
+	{
+		'@type': 'Country',
+		name: 'Colombia'
+	}
+];
+const seoKeywords = [
+	'trámites vehiculares en Medellín',
+	'asesoría vehicular en Medellín',
+	'trámites vehiculares Área Metropolitana',
+	'trámites de tránsito en Medellín',
+	'traspaso de moto en Medellín',
+	'asesoría vehicular en Antioquia',
+	'motos de segunda en Medellín',
+	'compra segura de vehículos en Colombia',
+	'comprar Royal Enfield usada',
+	'vender Royal Enfield en Medellín',
+	'retoma de motos en Medellín'
+];
+const structuredData = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'Organization',
+		name: 'Rincón Motos',
+		description: 'Acompañamiento para trámites vehiculares, asesoría vehicular, compra y retoma de motos en Medellín, el Área Metropolitana y Colombia.',
+		areaServed: localAreas
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'WebSite',
+		name: 'Rincón Motos',
+		inLanguage: 'es-CO',
+		keywords: seoKeywords,
+		about: {
+			'@type': 'Thing',
+			name: 'Trámites vehiculares en Medellín y el Área Metropolitana'
+		}
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'WebPage',
+		name: pageTitle,
+		description: pageDescription,
+		inLanguage: 'es-CO',
+		keywords: seoKeywords,
+		about: {
+			'@type': 'Thing',
+			name: 'Trámites vehiculares y asesoría vehicular en Medellín'
+		}
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'Service',
+		name: 'Trámites y servicios vehiculares en Medellín',
+		serviceType: ['Trámites vehiculares', 'Asesoría vehicular', 'Compra de motos de segunda', 'Retoma de motos'],
+		description: 'Trámites vehiculares, asesoría vehicular y compra o retoma de motos de segunda en Medellín, el Área Metropolitana y Colombia.',
+		provider: {
+			'@type': 'Organization',
+			name: 'Rincón Motos'
+		},
+		areaServed: localAreas
+	}
+];
+---
+
+<!doctype html>
+<html lang="es-CO">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="robots" content={isHomePage ? 'index, follow' : 'noindex, follow'} />
+		<meta
+			name="description"
+			content={pageDescription}
+		/>
+		{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="es_CO" />
+		<meta property="og:site_name" content="Rincón Motos" />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={pageDescription} />
+		<title>{pageTitle}</title>
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+	</head>
+	<body class="bg-agencia-fondo text-agencia-texto font-agencia-texto">
+		<Navbar
+			links={navigationLinks}
+			ctaHref={whatsappLink('Hola, quiero saber más sobre asesorías de tránsito en Medellín.')}
+		/>
+
+		<main>
+			<section class="bg-agencia-fondo px-5 py-16 text-agencia-texto md:px-8 md:py-24">
+				<div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+					<div>
+						<p class="mb-5 font-agencia-titulo text-sm font-bold uppercase tracking-tight text-agencia-acento">Trámites vehiculares en Medellín y el Área Metropolitana</p>
+						<h1 class="max-w-3xl font-agencia-titulo text-4xl font-extrabold leading-tight tracking-tight text-agencia-texto md:text-6xl">
+							Tus trámites vehiculares, sin vueltas ni riesgos.
+						</h1>
+						<p class="mt-6 max-w-2xl text-lg leading-relaxed text-agencia-texto-mutado md:text-xl">
+							Resolvemos tus trámites vehiculares en Medellín, te damos asesoría vehicular y te ayudamos a comprar o vender motos de segunda en el Área Metropolitana y Colombia.
+						</p>
+						<div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-start">
+							<a
+								href={whatsappLink('Hola, quiero saber más sobre asesorías de tránsito en Medellín.')}
+								target="_blank"
+								rel="noreferrer"
+								class="flex h-14 w-full items-center justify-center rounded-lg bg-agencia-whatsapp px-7 text-center font-agencia-titulo font-bold uppercase text-agencia-fondo shadow-md transition-transform hover:scale-105 active:scale-95 sm:w-auto"
+							>
+								Asesorarme por WhatsApp
+							</a>
+							<p class="text-xs leading-relaxed text-agencia-texto-mutado sm:max-w-36 sm:pt-2">Atención inmediata. Sin compromisos.</p>
+						</div>
+					</div>
+
+					<IllustrativePanel
+						eyebrow="Dónde estamos"
+						title="Presencia local, cobertura nacional"
+						description="Estamos principalmente en Medellín y el Área Metropolitana, con trámites, compras y retomas disponibles a nivel nacional."
+						steps={[
+							{ number: '01', label: 'Medellín' },
+							{ number: '02', label: 'Área Metropolitana' },
+							{ number: '03', label: 'Trámites y operaciones en Colombia' }
+						]}
+					/>
+				</div>
+			</section>
+
+			<div class="w-full bg-agencia-acento px-5 py-4 text-center font-agencia-titulo text-xs font-bold uppercase tracking-tight text-agencia-fondo md:px-8 md:text-sm">
+				<div class="mx-auto flex max-w-7xl flex-col gap-3 md:flex-row md:justify-between md:gap-6">
+					<span>Trámites 100% legales</span>
+					<span>Verificación en el RUNT</span>
+					<span>Compra y retoma multimarca</span>
+				</div>
+			</div>
+
+			<section class="bg-agencia-fondo px-5 py-16 md:px-8 md:py-24" id="servicios">
+				<div class="mx-auto max-w-7xl">
+					<div class="max-w-3xl">
+						<p class="font-agencia-titulo text-sm font-bold uppercase tracking-tight text-agencia-acento">Lo que podemos resolver</p>
+						<h2 class="mt-3 font-agencia-titulo text-3xl font-extrabold tracking-tight text-agencia-texto md:text-5xl">Un servicio claro para cada momento de tu compra</h2>
+						<p class="mt-5 text-lg leading-relaxed">Elige el servicio que necesitas y conversemos directamente sobre tu caso vehicular.</p>
+					</div>
+
+					<div class="mt-10 grid items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3">
+						<ServiceCard
+							number="01"
+							title="Trámites vehiculares"
+							description="Gestionamos el papeleo para que tu vehículo quede correctamente a tu nombre."
+							benefits={['Traspasos a nivel nacional', 'Revisión de comparendos y embargos', 'Verificación de documentos en el RUNT']}
+							ctaHref={whatsappLink('Hola, quiero saber más sobre trámites de tránsito en Medellín.')}
+							ctaLabel="Cotizar por WhatsApp"
+							note="Te indicamos requisitos y costos antes de iniciar."
+						/>
+
+						<ServiceCard
+							number="02"
+							title="Venta de motos usadas"
+							description="Encuentra motos de segunda de distintas marcas, con especial interés en opciones Royal Enfield."
+							benefits={['Catálogo actualizado en Facebook', 'Opciones de distintas marcas', 'Compra directa y retoma disponible']}
+							ctaHref={facebookCatalogUrl}
+							ctaLabel="Ver catálogo en Facebook"
+							note="Explora las motos disponibles y escríbenos para conocer cada opción."
+						/>
+
+						<ServiceCard
+							number="03"
+							title="Compra y retoma de motos"
+							description="Compramos motos de cualquier marca y te conectamos con opciones de segunda, con especial interés en Royal Enfield."
+							benefits={['Compra directa de motos usadas', 'Retoma de motos multimarca', 'Opciones especiales Royal Enfield']}
+							ctaHref={whatsappLink('Hola, quiero saber más sobre compra o venta de motos usadas.')}
+							ctaLabel="Hablar de mi moto"
+							note="Cuéntanos marca, modelo, año y qué estás buscando."
+						/>
+					</div>
+
+					<div class="mt-8">
+						<MotorcycleTradeCard
+							sellHref={whatsappLink('Hola, quiero saber más sobre vender mi Royal Enfield.')}
+							buyHref={whatsappLink('Hola, quiero saber más sobre comprar una moto usada.')}
+							catalogHref={facebookCatalogUrl}
+						/>
+					</div>
+				</div>
+			</section>
+
+			<section class="bg-agencia-tarjeta px-5 py-16 md:px-8 md:py-24" id="tramites-comunes">
+				<div class="mx-auto max-w-7xl">
+					<div class="max-w-3xl">
+						<p class="font-agencia-titulo text-sm font-bold uppercase tracking-tight text-agencia-acento">Catálogo de trámites comunes en Colombia</p>
+						<h2 class="mt-3 font-agencia-titulo text-3xl font-extrabold tracking-tight text-agencia-texto md:text-5xl">Los trámites que más protegen tu vehículo y tu patrimonio</h2>
+						<p class="mt-5 text-lg leading-relaxed text-agencia-texto-mutado">Te acompañamos en los procesos más frecuentes para comprar, vender, liberar o trasladar la matrícula de tu moto.</p>
+					</div>
+
+					<div class="mt-10 grid items-stretch gap-6 lg:grid-cols-3">
+						<CommonProcedureCard
+							number="1"
+							title="Traspasos Seguros y Sin Filas"
+							pain="Comprar la moto, soltar la plata y seguir con la tarjeta de propiedad a nombre de otro puede dejarte expuesto a embargos o fotomultas."
+							description="Formalizamos la compra o venta de tu moto y protegemos tu patrimonio. Nos encargamos del papeleo en la Secretaría de Tránsito para que tú solo te preocupes por disfrutar la ruta."
+							benefits={['Verificación previa en RUNT y SIMIT', 'Elaboración de contrato y autenticaciones', 'Entrega de nueva tarjeta de propiedad']}
+							ctaHref={whatsappLink('Hola, quiero saber más sobre un traspaso de propiedad en Medellín.')}
+						/>
+
+						<CommonProcedureCard
+							number="2"
+							title="Levantamiento de Prenda (Despignoración)"
+							pain="Pagar el crédito y descubrir que la moto sigue pignorada puede impedirte venderla o negociar con tranquilidad."
+							description="Si ya terminaste de pagar tu moto, liberamos el historial ante la entidad financiera y tránsito para que quede a tu nombre y libre para negociar."
+							benefits={['Gestión directa con el banco o financiera', 'Actualización de la información en el RUNT', 'Expedición de licencia de tránsito limpia']}
+							ctaHref={whatsappLink('Hola, quiero saber más sobre el levantamiento de prenda de mi moto.')}
+						/>
+
+						<CommonProcedureCard
+							number="3"
+							title="Traslado de Matrícula"
+							pain="Vivir en Medellín o Sabaneta con la moto matriculada lejos puede volver cada trámite presencial una complicación."
+							description="Llevamos los papeles de tu moto a tu ciudad actual: gestionamos el traslado desde la secretaría de origen hasta tu municipio sin que tengas que viajar."
+							benefits={['Solicitud en la secretaría de origen', 'Radicación física en tu ciudad', 'Centralización del pago de impuestos']}
+							ctaHref={whatsappLink('Hola, quiero saber más sobre el traslado de matrícula de mi moto.')}
+						/>
+					</div>
+				</div>
+			</section>
+
+			<section class="bg-agencia-tarjeta px-5 py-16 text-agencia-texto md:px-8 md:py-20">
+				<div class="mx-auto grid max-w-7xl gap-8 md:grid-cols-[1fr_auto] md:items-center">
+					<div>
+						<p class="font-agencia-titulo text-sm font-bold uppercase tracking-tight">Da el siguiente paso con respaldo</p>
+						<h2 class="mt-3 max-w-3xl font-agencia-titulo text-3xl font-extrabold tracking-tight md:text-5xl">Tu próxima decisión merece información completa.</h2>
+						<p class="mt-5 max-w-2xl text-lg leading-relaxed text-agencia-texto-mutado">Cuéntanos qué necesitas y un asesor te responderá por WhatsApp.</p>
+					</div>
+					<a href={whatsappLink('Hola, quiero saber más sobre asesorías de tránsito en Medellín.')} target="_blank" rel="noreferrer" class="flex h-14 w-full items-center justify-center rounded-lg bg-agencia-whatsapp px-7 text-center font-agencia-titulo font-bold uppercase text-agencia-fondo shadow-md transition-transform hover:scale-105 active:scale-95 md:w-auto">Quiero asesoría</a>
+				</div>
+			</section>
+		</main>
+
+		<footer class="bg-agencia-fondo px-5 py-12 text-agencia-texto md:px-8 md:py-16">
+			<div class="mx-auto grid max-w-7xl gap-10 border-b border-agencia-acento/30 pb-10 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
+				<div>
+					<p class="font-agencia-titulo text-xl font-extrabold tracking-tight text-agencia-acento">RINCÓN MOTOS</p>
+					<p class="mt-4 max-w-sm leading-relaxed text-agencia-texto-mutado">Acompañamiento confiable para que compres, vendas y pongas en regla tu vehículo.</p>
+				</div>
+				<div>
+					<p class="font-agencia-titulo font-bold uppercase text-agencia-acento">Confianza</p>
+					<ul class="mt-4 space-y-3 text-sm leading-relaxed">
+						<li>Trámites 100% legales</li>
+						<li>Verificación en el RUNT</li>
+						<li>Compra y retoma multimarca</li>
+					</ul>
+				</div>
+				<div>
+					<p class="font-agencia-titulo font-bold uppercase text-agencia-acento">Contacto</p>
+					<p class="mt-4 leading-relaxed">Atención por WhatsApp<br />Lunes a sábado</p>
+					<a href={whatsappLink('Hola, quiero saber más sobre asesorías de tránsito en Medellín.')} target="_blank" rel="noreferrer" class="mt-4 inline-block font-agencia-titulo font-bold text-agencia-acento underline decoration-agencia-acento underline-offset-4">Escribir ahora</a>
+				</div>
+			</div>
+			<div class="mx-auto flex max-w-7xl flex-col gap-3 pt-6 text-xs text-agencia-texto-mutado md:flex-row md:justify-between">
+				<p>© 2026 Rincón Motos. Información clara para decisiones seguras.</p>
+				<p>Servicio disponible en Colombia.</p>
+			</div>
+		</footer>
+	</body>
+</html>

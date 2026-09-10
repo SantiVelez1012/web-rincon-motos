@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Source+Sans+3:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-agencia-fondo: #0B1B3D;
+  --color-agencia-tarjeta: #162A5A;
+  --color-agencia-acento: #E3A833;
+  --color-agencia-texto: #F0F4F8;
+  --color-agencia-texto-mutado: #A0B3D0;
+  --color-agencia-whatsapp: #25D366;
+  --font-agencia-titulo: 'Archivo', sans-serif;
+  --font-agencia-texto: 'Source Sans 3', sans-serif;
+}
+

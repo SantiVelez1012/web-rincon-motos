@@ -1,0 +1,138 @@
+---
+interface NavLink {
+	label: string;
+	href: string;
+	external?: boolean;
+}
+
+interface Props {
+	links: NavLink[];
+	brand?: string;
+	ctaLabel?: string;
+	ctaHref?: string;
+}
+
+const {
+	links,
+	brand = 'RINCÓN MOTOS',
+	ctaLabel = 'Hablar con un asesor',
+	ctaHref
+} = Astro.props;
+
+const isCurrentLink = (href: string) => {
+	if (!href.startsWith('/')) return false;
+	const linkPath = href.split('#')[0] || '/';
+	return Astro.url.pathname === linkPath;
+};
+---
+
+<header class="border-b border-agencia-acento/30 bg-agencia-fondo">
+	<nav class="relative mx-auto max-w-7xl px-5 py-5 md:px-8" aria-label="Navegación principal">
+		<div class="flex items-center justify-between gap-4">
+			<a href="/" class="font-agencia-titulo text-lg font-extrabold tracking-tight text-agencia-acento" aria-label={`${brand}, inicio`}>
+				{brand}
+			</a>
+
+			<div class="hidden items-center gap-7 md:flex">
+				<ul class="flex items-center gap-6" role="list">
+					{links.map((link) => (
+						<li>
+							<a
+								href={link.href}
+								target={link.external ? '_blank' : undefined}
+								rel={link.external ? 'noreferrer' : undefined}
+								aria-current={isCurrentLink(link.href) ? 'page' : undefined}
+								class:list={[
+									'font-agencia-titulo text-sm font-bold transition-colors hover:text-agencia-acento',
+									isCurrentLink(link.href) ? 'text-agencia-acento' : 'text-agencia-texto-mutado'
+								]}
+							>
+								{link.label}
+							</a>
+						</li>
+					))}
+				</ul>
+
+				{ctaHref && (
+					<a href={ctaHref} target="_blank" rel="noreferrer" class="rounded-lg bg-agencia-whatsapp px-5 py-3 text-center font-agencia-titulo text-sm font-bold uppercase text-agencia-fondo shadow-md transition-transform hover:scale-105 active:scale-95">
+						{ctaLabel}
+					</a>
+				)}
+			</div>
+
+			<button
+				type="button"
+				class="flex h-11 w-11 items-center justify-center rounded-lg border border-agencia-acento/50 text-agencia-acento md:hidden"
+				aria-label="Abrir menú"
+				aria-expanded="false"
+				aria-controls="mobile-navigation"
+				data-nav-toggle
+			>
+				<span class="sr-only">Abrir menú</span>
+				<span class="flex w-5 flex-col gap-1" aria-hidden="true">
+					<span class="h-0.5 w-full bg-current"></span>
+					<span class="h-0.5 w-full bg-current"></span>
+					<span class="h-0.5 w-full bg-current"></span>
+				</span>
+			</button>
+		</div>
+
+		<div id="mobile-navigation" class="hidden border-t border-agencia-acento/30 pt-5 md:hidden" data-nav-menu>
+			<ul class="grid gap-4" role="list">
+				{links.map((link) => (
+					<li>
+						<a
+							href={link.href}
+							target={link.external ? '_blank' : undefined}
+							rel={link.external ? 'noreferrer' : undefined}
+							aria-current={isCurrentLink(link.href) ? 'page' : undefined}
+							class:list={[
+								'block border-b border-agencia-acento/20 pb-3 font-agencia-titulo text-sm font-bold',
+								isCurrentLink(link.href) ? 'text-agencia-acento' : 'text-agencia-texto-mutado'
+							]}
+						>
+							{link.label}
+						</a>
+					</li>
+				))}
+			</ul>
+
+			{ctaHref && (
+				<a href={ctaHref} target="_blank" rel="noreferrer" class="mt-5 flex h-14 w-full items-center justify-center rounded-lg bg-agencia-whatsapp px-5 text-center font-agencia-titulo text-sm font-bold uppercase text-agencia-fondo shadow-md transition-transform active:scale-95">
+					{ctaLabel}
+				</a>
+			)}
+		</div>
+	</nav>
+</header>
+
+<script>
+	const navigationToggle = document.querySelector('[data-nav-toggle]');
+	const mobileNavigation = document.querySelector('[data-nav-menu]');
+	const internalSectionLinks = document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
+
+	internalSectionLinks.forEach((link) => {
+		link.addEventListener('click', (event) => {
+			event.preventDefault();
+			const targetId = link.getAttribute('href');
+			if (!targetId) return;
+
+			const target = document.querySelector(targetId);
+			target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+			if (mobileNavigation && navigationToggle) {
+				mobileNavigation.classList.add('hidden');
+				navigationToggle.setAttribute('aria-expanded', 'false');
+				navigationToggle.setAttribute('aria-label', 'Abrir menú');
+			}
+		});
+	});
+
+	navigationToggle?.addEventListener('click', () => {
+		if (!mobileNavigation) return;
+		const isOpen = navigationToggle.getAttribute('aria-expanded') === 'true';
+		navigationToggle.setAttribute('aria-expanded', String(!isOpen));
+		navigationToggle.setAttribute('aria-label', isOpen ? 'Abrir menú' : 'Cerrar menú');
+		mobileNavigation.classList.toggle('hidden', isOpen);
+	});
+</script>

@@ -1,0 +1,44 @@
+---
+interface Props {
+	buyHref: string;
+	sellHref: string;
+	catalogHref: string;
+}
+
+const { buyHref, sellHref, catalogHref } = Astro.props;
+---
+
+<section class="relative overflow-hidden rounded-3xl border border-agencia-acento/50 bg-agencia-acento px-6 py-8 text-agencia-fondo md:px-10 md:py-10" aria-labelledby="motorcycle-trade-title">
+	<div class="absolute -right-12 -top-16 h-48 w-48 rounded-full border-[18px] border-agencia-fondo/10" aria-hidden="true"></div>
+	<div class="absolute bottom-0 right-20 h-1 w-24 bg-agencia-fondo/20" aria-hidden="true"></div>
+
+	<div class="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+		<div class="max-w-2xl">
+			<p class="font-agencia-titulo text-xs font-bold uppercase tracking-tight">Compra y retoma de motos</p>
+			<h2 id="motorcycle-trade-title" class="mt-3 font-agencia-titulo text-3xl font-extrabold leading-tight tracking-tight md:text-5xl">
+				¿Vendes tu Royal Enfield o buscas una de segunda?
+			</h2>
+			<p class="mt-4 max-w-xl text-lg leading-relaxed text-agencia-fondo/80">
+				Compramos y recibimos motos de cualquier marca. Con especial interés en Royal Enfield para compra directa, retoma y opciones usadas.
+			</p>
+		</div>
+
+		<div class="grid gap-3 sm:grid-cols-2 lg:w-80 lg:grid-cols-1">
+			<a href={sellHref} target="_blank" rel="noreferrer" class="flex min-h-14 items-center justify-center rounded-lg bg-agencia-fondo px-5 py-3 text-center font-agencia-titulo text-sm font-bold uppercase text-agencia-texto transition-transform hover:scale-105 active:scale-95">
+				Quiero vender mi Royal Enfield
+			</a>
+			<a href={buyHref} target="_blank" rel="noreferrer" class="flex min-h-14 items-center justify-center rounded-lg border-2 border-agencia-fondo px-5 py-3 text-center font-agencia-titulo text-sm font-bold uppercase text-agencia-fondo transition-transform hover:scale-105 active:scale-95">
+				Quiero comprar una usada
+			</a>
+			<a href={catalogHref} target="_blank" rel="noreferrer" class="text-center font-agencia-titulo text-xs font-bold uppercase underline decoration-agencia-fondo/50 underline-offset-4 transition-opacity hover:opacity-70">
+				Ver catálogo en Facebook
+			</a>
+		</div>
+	</div>
+
+	<div class="relative mt-8 flex flex-wrap gap-x-6 gap-y-2 border-t border-agencia-fondo/20 pt-4 text-xs font-bold uppercase tracking-tight">
+		<span>Cualquier marca</span>
+		<span>Compra directa</span>
+		<span>Retoma de motos</span>
+	</div>
+</section>
